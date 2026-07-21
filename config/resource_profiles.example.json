@@ -1,0 +1,108 @@
+{
+  "version": "0.2",
+  "updated": "2026-07-21",
+  "resource_profiles": {
+    "openrouter": {
+      "platform": "OpenRouter",
+      "account_type": "free",
+      "models": {
+        "nvidia/nemotron-3-ultra-550b-a55b:free": {
+          "status": "available",
+          "quality_score": 7,
+          "strengths": ["large-model", "reasoning"],
+          "cost": "free",
+          "rate_limit": "unknown",
+          "daily_quota": "unknown"
+        },
+        "nvidia/nemotron-3-super-120b-a12b:free": {
+          "status": "available",
+          "quality_score": 6,
+          "strengths": ["large-model", "reasoning"],
+          "cost": "free",
+          "rate_limit": "unknown",
+          "daily_quota": "unknown"
+        },
+        "google/gemma-4-26b-a4b-it:free": {
+          "status": "available",
+          "quality_score": 6,
+          "strengths": ["general-purpose", "multilingual"],
+          "cost": "free",
+          "rate_limit": "unknown",
+          "daily_quota": "unknown"
+        }
+      }
+    },
+    "ollama": {
+      "platform": "Ollama Cloud",
+      "account_type": "free",
+      "models": {
+        "gpt-oss:120b": {
+          "status": "available",
+          "quality_score": 7,
+          "strengths": ["large-model", "general-purpose"],
+          "cost": "free",
+          "rate_limit": "unknown",
+          "daily_quota": "unknown"
+        },
+        "minimax-m3": {
+          "status": "available",
+          "quality_score": 7,
+          "strengths": ["tts", "video", "image"],
+          "cost": "free",
+          "rate_limit": "unknown",
+          "daily_quota": "unknown"
+        },
+        "nemotron-3-ultra": {
+          "status": "available",
+          "quality_score": 7,
+          "strengths": ["large-model", "reasoning"],
+          "cost": "free",
+          "rate_limit": "unknown",
+          "daily_quota": "unknown"
+        }
+      }
+    },
+    "moonshot": {
+      "platform": "Moonshot",
+      "account_type": "mixed",
+      "models": {
+        "kimi-k3-monthly": {
+          "status": "available",
+          "quality_score": 8,
+          "strengths": ["long-context", "code", "routing"],
+          "cost": "monthly",
+          "rate_limit": "unknown",
+          "daily_quota": "monthly-limit"
+        },
+        "kimi-k3-payg": {
+          "status": "available",
+          "quality_score": 8,
+          "strengths": ["long-context", "code", "deep-routing"],
+          "cost": "payg",
+          "rate_limit": "unknown",
+          "daily_quota": "payg"
+        }
+      }
+    }
+  },
+  "routing_strategy": {
+    "quality_first": {
+      "description": "Use highest quality available model, regardless of cost",
+      "order": ["kimi-k3-payg", "kimi-k3-monthly", "nvidia/nemotron-3-ultra-550b-a55b:free", "minimax-m3"]
+    },
+    "cost_first": {
+      "description": "Use cheapest available model, acceptable quality",
+      "order": ["agnes-2.0-flash", "ollama-gpt-oss:20b", "openrouter-nvidia/nemotron-nano-9b-v2:free"]
+    },
+    "balanced": {
+      "description": "Balance quality and cost based on task type",
+      "rules": {
+        "simple": {"preferred": "agnes-2.0-flash", "fallback": "ollama-gpt-oss:20b"},
+        "medium": {"preferred": "kimi-k3-monthly", "fallback": "ollama-gpt-oss:120b"},
+        "complex": {"preferred": "kimi-k3-payg", "fallback": "kimi-k3-monthly"},
+        "gui_operation": {"preferred": "kimi-k3-monthly", "fallback": "agnes-2.0-flash"},
+        "voice_media": {"preferred": "minimax-m3", "fallback": "ollama-minimax-m3"}
+      }
+    }
+  }
+}
