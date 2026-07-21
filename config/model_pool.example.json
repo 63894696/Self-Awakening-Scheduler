@@ -1,0 +1,110 @@
+{
+  "version": "0.1",
+  "updated": "2026-07-21",
+  "models": {
+    "agnes-2.0-flash": {
+      "provider": "AgnesAI",
+      "base_url": "https://apihub.agnes-ai.com/v1",
+      "key_env": "AGNES_API_KEY",
+      "payment_type": "subscription",
+      "context_window": 131072,
+      "strengths": ["code-review", "simple-routing"],
+      "weaknesses": ["complex-routing-self-bias"],
+      "cost_per_mtok": "free-monthly",
+      "notes": "Simple tasks, code review"
+    },
+    "kimi-k3-monthly": {
+      "provider": "Moonshot",
+      "base_url": "https://api.kimi.com/coding/v1",
+      "key_env": "KIMI_CODING_KEY",
+      "payment_type": "subscription",
+      "context_window": 1048576,
+      "strengths": ["long-context", "code", "routing"],
+      "weaknesses": ["reasoning-compressed"],
+      "cost_per_mtok": "monthly",
+      "notes": "Lightweight router, good for medium tasks"
+    },
+    "kimi-k3-payg": {
+      "provider": "Moonshot",
+      "base_url": "https://api.moonshot.cn/v1",
+      "key_env": "MOONSHOT_API_KEY",
+      "payment_type": "payasyougo",
+      "context_window": 1048576,
+      "strengths": ["long-context", "code", "deep-routing"],
+      "weaknesses": ["reasoning-token-heavy", "cost-high"],
+      "cost_per_mtok": "payg",
+      "notes": "Deep router, best for complex tasks"
+    },
+    "minimax-m3": {
+      "provider": "MiniMax",
+      "base_url": "https://api.minimaxi.com/v1",
+      "key_env": "MINIMAX_API_KEY",
+      "payment_type": "subscription",
+      "context_window": 196608,
+      "strengths": ["tts", "video", "image"],
+      "weaknesses": ["code-not-primary"],
+      "cost_per_mtok": "monthly",
+      "notes": "TTS, video, image generation"
+    },
+    "openrouter-nvidia/nemotron-3-ultra-550b-a55b:free": {
+      "provider": "OpenRouter",
+      "base_url": "https://openrouter.ai/api/v1",
+      "key_env": "OPENROUTER_API_KEY",
+      "payment_type": "free",
+      "context_window": 131072,
+      "strengths": ["large-model", "reasoning"],
+      "weaknesses": ["rate-limited"],
+      "cost_per_mtok": "free",
+      "notes": "Large model, good for complex tasks"
+    },
+    "ollama-gpt-oss:120b": {
+      "provider": "Ollama",
+      "base_url": "https://ollama.com/v1",
+      "key_env": "OLLAMA_API_KEY",
+      "payment_type": "free",
+      "context_window": 131072,
+      "strengths": ["large-model", "general-purpose"],
+      "weaknesses": ["rate-limited"],
+      "cost_per_mtok": "free",
+      "notes": "Large model, good for general tasks"
+    }
+  },
+  "routing_rules": {
+    "simple": {
+      "task_types": ["总结", "翻译", "简单问答", "代码片段修改"],
+      "preferred_router": "agnes-2.0-flash",
+      "fallback_router": "ollama-gpt-oss:20b",
+      "executor": "agnes-2.0-flash"
+    },
+    "medium": {
+      "task_types": ["代码审查", "文档生成", "短代码编写"],
+      "preferred_router": "kimi-k3-monthly",
+      "fallback_router": "ollama-gpt-oss:120b",
+      "executor": "qwen3-coder-plus"
+    },
+    "complex": {
+      "task_types": ["多文件重构", "架构设计", "复杂推理"],
+      "preferred_router": "kimi-k3-payg",
+      "fallback_router": "kimi-k3-monthly",
+      "executor": "kimi-k3-payg"
+    },
+    "gui_operation": {
+      "task_types": ["浏览器操作", "桌面GUI", "Android模拟器"],
+      "preferred_router": "kimi-k3-monthly",
+      "fallback_router": "agnes-2.0-flash",
+      "executor": "ui-tars"
+    },
+    "voice_media": {
+      "task_types": ["TTS", "视频生成", "音频生成"],
+      "preferred_router": "minimax-m3",
+      "fallback_router": "ollama-minimax-m3",
+      "executor": "minimax-m3"
+    }
+  },
+  "fallback_chain": {
+    "kimi-k3-payg": ["kimi-k3-monthly", "openrouter-nvidia/nemotron-3-ultra-550b-a55b:free", "minimax-m3"],
+    "kimi-k3-monthly": ["openrouter-nvidia/nemotron-3-ultra-550b-a55b:free", "minimax-m3", "agnes-2.0-flash"],
+    "minimax-m3": ["ollama-minimax-m3", "agnes-2.0-flash"],
+    "agnes-2.0-flash": ["openrouter-nvidia/nemotron-nano-9b-v2:free", "ollama-gpt-oss:20b"]
+  }
+}
