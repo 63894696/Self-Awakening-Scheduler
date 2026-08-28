@@ -1,290 +1,184 @@
-# Contributing to Self-Awakening-Scheduler
+# Contributing to OI Enhancements
 
-Thank you for your interest in contributing to Self-Awakening-Scheduler! This document provides guidelines for contributing to the project.
+Thanks for considering contributing to OI Enhancements (Prisir AI,
+oiagent, prisir_findex, prisir_fcontent, fastlane, and related
+projects in this repository). This document explains how to
+contribute, what license Your contribution will be under, and how
+the project handles relicensing of past releases.
 
-## Code of Conduct
 
-By participating in this project, you agree to abide by our [Code of Conduct](CODE_OF_CONDUCT.md).
+## License of Your contribution
 
-## How to Contribute
+By submitting a contribution (patch, pull request, code, document,
+icon, translation, or any other material) to this repository, You
+agree to the following:
 
-### Reporting Bugs
+### Developer Certificate of Origin (DCO) — required
 
-1. **Check existing issues** to avoid duplicates
-2. **Use the bug report template** when creating a new issue
-3. **Provide detailed information**:
-   - Steps to reproduce
-   - Expected behavior
-   - Actual behavior
-   - Environment (OS, Python version, etc.)
-   - Relevant logs or error messages
-
-### Suggesting Features
-
-1. **Check existing feature requests** to avoid duplicates
-2. **Use the feature request template** when creating a new issue
-3. **Provide detailed information**:
-   - Use case and motivation
-   - Proposed solution
-   - Alternative solutions considered
-   - Potential impact on existing functionality
-
-### Submitting Pull Requests
-
-1. **Fork the repository** and create a feature branch
-2. **Follow the coding style**:
-   - Use Python 3.8+ features
-   - Follow PEP 8 style guide
-   - Add type hints where appropriate
-   - Write docstrings for all public functions
-3. **Write tests** for new functionality
-4. **Update documentation** for any changes
-5. **Ensure all tests pass** before submitting
-
-## Development Setup
-
-### Prerequisites
-
-- Python 3.8 or higher
-- Git
-
-### Installation
-
-1. Fork the repository
-2. Clone your fork:
-   ```bash
-   git clone https://github.com/your-username/Self-Awakening-Scheduler.git
-   cd Self-Awakening-Scheduler
-   ```
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   pip install -r requirements-dev.txt  # For development dependencies
-   ```
-
-### Running Tests
-
-```bash
-# Run all tests
-pytest
-
-# Run specific test file
-pytest tests/test_scheduler.py
-
-# Run with coverage
-pytest --cov=src tests/
-```
-
-### Code Style
-
-We use the following tools to maintain code quality:
-
-- **Black** for code formatting
-- **isort** for import sorting
-- **flake8** for linting
-- **mypy** for type checking
-
-Run these tools before submitting:
-
-```bash
-# Format code
-black src/ tests/
-
-# Sort imports
-isort src/ tests/
-
-# Lint code
-flake8 src/ tests/
-
-# Type check
-mypy src/
-```
-
-## Project Structure
+All commits MUST be signed off using the DCO. Add a `-s` flag to
+`git commit`, which adds a `Signed-off-by:` line to the commit
+message:
 
 ```
-Self-Awakening-Scheduler/
-├── src/                          # Source code
-│   ├── __init__.py
-│   ├── smart_scheduler.py        # Main scheduler
-│   ├── gradient_router.py        # Gradient routing
-│   ├── model_pool_updater.py     # Model pool updates
-│   └── usage_monitor.py          # Usage monitoring
-├── config/                       # Configuration files
-│   ├── model_pool.example.json   # Model pool template
-│   └── resource_profiles.example.json  # Resource profiles template
-├── docs/                         # Documentation
-│   ├── METHODOLOGY.md            # Methodology
-│   ├── INTEGRATION.md            # Integration guide
-│   └── EXAMPLES.md               # Usage examples
-├── tests/                        # Test files
-│   └── test_scheduler.py         # Test suite
-├── .github/                      # GitHub workflows
-│   └── workflows/
-│       └── ci.yml                # CI/CD pipeline
-├── README.md                     # Project overview
-├── LICENSE                       # License
-├── requirements.txt              # Dependencies
-├── requirements-dev.txt          # Development dependencies
-└── setup.py                      # Package setup
+Signed-off-by: Your Name <your.email@example.com>
 ```
 
-## Adding New Features
+The `Signed-off-by:` line certifies, under penalty of perjury, that:
 
-### Adding a New Model Provider
+> (a) I created this contribution myself, OR
+> (b) I have the right to submit it under the project's license, OR
+> (c) I have received explicit permission from the contributor to
+>     submit it on their behalf.
 
-1. **Add model configuration** to `config/model_pool.example.json`:
-   ```json
-   {
-     "models": {
-       "new-model": {
-         "provider": "NewProvider",
-         "base_url": "https://api.newprovider.com/v1",
-         "key_env": "NEW_PROVIDER_API_KEY",
-         "payment_type": "free",
-         "context_window": 131072,
-         "strengths": ["code", "reasoning"]
-       }
-     }
-   }
-   ```
+This is the [Developer Certificate of Origin 1.1](https://developercertificate.org/).
+The full text is at the bottom of this document.
 
-2. **Add resource profile** to `config/resource_profiles.example.json`:
-   ```json
-   {
-     "resource_profiles": {
-       "newprovider": {
-         "platform": "NewProvider",
-         "models": {
-           "new-model": {
-             "status": "available",
-             "quality_score": 7,
-             "strengths": ["code", "reasoning"],
-             "cost": "free"
-           }
-         }
-       }
-     }
-   }
-   ```
 
-3. **Add tests** for the new provider in `tests/test_scheduler.py`
+### Contributor License Agreement (CLA) — required for substantial contributions
 
-4. **Update documentation** in `docs/INTEGRATION.md`
+For contributions larger than ~200 lines OR contributions to Core
+Components (see CORE-COMPONENTS.md) OR any contribution that will
+be part of a release that the Project Copyright Holder intends to
+relicense under Apache-2.0 (see LICENSE-POLICY.md), You must also
+sign a CLA.
 
-### Adding a New Task Type
+The CLA grants the Project Copyright Holder the right to:
 
-1. **Add task type** to `task_match` in `src/smart_scheduler.py`:
-   ```python
-   task_match = {
-       "new_task_type": ["keyword1", "keyword2", "keyword3"],
-       # ... existing task types
-   }
-   ```
+- redistribute Your contribution under the project's current license
+  (OIE-PCS-1.0);
+- redistribute Your contribution under any Future License that the
+  Project Copyright Holder may choose to apply to that release
+  (including Apache-2.0);
+- hold copyright for the purpose of enforcing the project license.
 
-2. **Add routing rule** to `config/model_pool.example.json`:
-   ```json
-   {
-     "routing_rules": {
-       "new_task_type": {
-         "preferred_router": "preferred-model",
-         "fallback_router": "fallback-model"
-       }
-     }
-   }
-   ```
+The CLA does NOT transfer ownership of Your contribution to the
+Project Copyright Holder; You retain copyright and are credited
+in the NOTICE / AUTHORS file as appropriate.
 
-3. **Add tests** for the new task type
+The CLA process is light-weight: a per-PR bot will ask You to
+sign the CLA via GitHub (electronic signature is sufficient).
 
-4. **Update documentation** in `docs/METHODOLOGY.md`
 
-## Documentation
+### Why we ask for DCO + CLA
 
-### Writing Documentation
+The DCO certifies Your right to submit. The CLA preserves the
+Project Copyright Holder's ability to apply **Future Licenses** as
+described in LICENSE-POLICY.md. Without CLA, the Project Copyright
+Holder cannot safely relicense a release under Apache-2.0 because
+there would be no record of Your consent.
 
-- Use Markdown format
-- Follow the existing style
-- Include code examples
-- Add screenshots where appropriate
-- Keep it concise and clear
+The CLA does **not** allow the Project Copyright Holder to do
+anything other than what LICENSE-POLICY.md already says is the
+project's intent. It is purely an evidence-of-consent mechanism.
 
-### Updating Documentation
 
-- Update relevant documentation when adding features
-- Keep the README.md up to date
-- Add examples for new functionality
-- Update the API reference if needed
+## How to submit a contribution
 
-## Testing
+1. **Fork** the repository on GitHub.
+2. **Create a feature branch** (`git checkout -b my-feature`).
+3. **Make your changes**. Add tests where reasonable.
+4. **Sign off** each commit (`git commit -s`).
+5. **Push** the branch to Your fork.
+6. **Open a Pull Request** against `master` of the upstream.
 
-### Writing Tests
+The maintainers will review Your PR. Reviews may take 5–15 business
+days. We may ask for changes, additional tests, or documentation.
 
-- Use pytest framework
-- Write unit tests for all new functions
-- Write integration tests for new features
-- Aim for high test coverage
-- Use descriptive test names
+### Coding style
 
-### Running Tests
+- Python: PEP 8; type hints where reasonable; comments in
+  Simplified Chinese / English.
+- JavaScript / TypeScript: 2-space indent; match existing style in
+  the same file.
+- Rust: standard `cargo fmt` and `cargo clippy`.
+- Use the existing logging and error-handling patterns of the
+  module You are editing.
 
-```bash
-# Run all tests
-pytest
 
-# Run with verbose output
-pytest -v
+## What kinds of contributions are welcome
 
-# Run specific test
-pytest tests/test_scheduler.py::TestSmartScheduler::test_select_optimal_model
+| Kind | Welcome? | Notes |
+| ---- | -------- | ----- |
+| Bug fix | yes | add a regression test if practical |
+| Documentation fix | yes | typo / clarity / translation |
+| Performance improvement | yes | include before/after numbers |
+| New tool / connector | yes | if it fits the project scope |
+| New LLM provider in fastlane | yes | add adapter + tests |
+| Translation (UI strings) | yes | PRs to docs/ and assets |
+| New icon / logo | discuss first | Brand policy applies |
+| Major architectural change | discuss first | open an issue first |
+| Anything that adds a network call to a third-party server | discuss first | privacy / egress discipline |
+| Re-branding the project under a different name | NO | this is the original project |
 
-# Run with coverage report
-pytest --cov=src --cov-report=html tests/
+
+## What kinds of contributions are NOT accepted
+
+- Anything that adds advertising, tracking, or telemetry to the
+  Software without the user's informed consent.
+- Anything that weakens the LICENSE §3 source-availability obligation
+  for Core Components.
+- Anything that takes code from a third-party project whose license
+  is incompatible with OIE-PCS-1.0 (e.g. GPLv3-only code into MIT
+  modules), unless properly isolated.
+- Anything that introduces a non-trivial dependency on a non-open
+  source library, without prior approval.
+
+
+## Code of conduct
+
+We follow the Contributor Covenant 2.1. The full text is at
+https://www.contributor-covenant.org/version/2/1/code_of_conduct/.
+
+In short: be respectful, be constructive, assume good faith, and
+focus on the technical merits.
+
+
+## Security vulnerabilities
+
+If You find a security issue, **DO NOT open a public issue**. Send
+a private email to the address in COMMERCIAL-LICENSE.md, or use
+GitHub's private vulnerability reporting. We aim to acknowledge
+within 3 business days.
+
+
+## Release process
+
+Releases are tagged on `master`. Each release tag is immutable;
+the LICENSE / LICENSE-APACHE / CORE-COMPONENTS.md state at the tag
+governs that release. LICENSE-POLICY.md describes when a release
+transitions to Legacy Community Release under Apache-2.0.
+
+
+## DCO full text (1.1)
+
+```
+Developer Certificate of Origin
+Version 1.1
+
+By making a contribution to this project, I certify that:
+
+(a) The contribution was created in whole or in part by me and I
+    have the right to submit it under the open source license
+    indicated in the file; or
+
+(b) The contribution is based upon previous work that, to the best
+    of my knowledge, is covered under an appropriate open source
+    license and I have the right under that license to submit that
+    work with modifications, whether created in whole or in part
+    by me, under the same open source license (unless I am
+    permitted to submit under a different license), as indicated
+    in the file; or
+
+(c) The contribution was provided directly to me by some other
+    person who certified (a), (b) or (c) and I have not modified
+    it.
+
+(d) I understand and agree that this project and the contribution
+    are public and that a record of the contribution (including all
+    personal information I submit with it, including my sign-off) is
+    maintained indefinitely and may be redistributed consistent with
+    this project or the open source license(s) involved.
 ```
 
-## Release Process
 
-### Version Numbering
-
-We use [Semantic Versioning](https://semver.org/):
-
-- **Major version** (X.0.0): Breaking changes
-- **Minor version** (0.X.0): New features, backward compatible
-- **Patch version** (0.0.X): Bug fixes, backward compatible
-
-### Creating a Release
-
-1. **Update version** in `setup.py` and `__init__.py`
-2. **Update CHANGELOG.md** with release notes
-3. **Create a release branch**:
-   ```bash
-   git checkout -b release/v0.1.0
-   ```
-4. **Run tests** to ensure everything works
-5. **Create a pull request** for the release
-6. **Merge the release** and tag it:
-   ```bash
-   git tag -a v0.1.0 -m "Release v0.1.0"
-   git push origin v0.1.0
-   ```
-
-## Community
-
-### Getting Help
-
-- **GitHub Issues**: For bug reports and feature requests
-- **Discussions**: For questions and general discussion
-- **Discord**: For real-time chat (link in README)
-
-### Staying Updated
-
-- **Watch the repository** for updates
-- **Join the mailing list** for announcements
-- **Follow the blog** for tutorials and updates
-
-## License
-
-By contributing, you agree that your contributions will be licensed under the MIT License.
-
-## Acknowledgments
-
-Thank you to all contributors who have helped make this project better!
+Last updated: 2026-08-28
